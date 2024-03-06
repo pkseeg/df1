@@ -27,6 +27,7 @@ class DF1:
         return source_median, target_depths
     
     def precision_recall_fscore_support(self, y_true, y_pred, **kwargs):
+        assert len(y_pred) == len(self.target_depths),  "y_pred does not match the number of target texts!"
         # calculate the distances between the depth of the source median and the depth of each target text
         dists = [self.source_median - x for x in self.target_depths]
         # set the sample weights (for ease of access later)
