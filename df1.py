@@ -10,7 +10,7 @@ class DF1:
         # FIXME add documentation -- I need to explain that the source_texts should be sampled, and the target_texts too
         self.source_median, self.target_depths = self._depth_scores(source_texts, target_texts, model_card)
 
-    def _depth_scores_y(self, source_texts, target_texts, model_card):
+    def _depth_scores(self, source_texts, target_texts, model_card):
         # Load sentence transformer model
         model = SentenceTransformer(model_card)
 
