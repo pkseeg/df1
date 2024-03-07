@@ -26,9 +26,22 @@ class DF1:
         source_median = np.median(source_depths)
         return source_median, target_depths
     
+    def _ranks(self):
+        # Create a sorted version of the list
+        sorted_lst = sorted(self.target_depths)
+        
+        # Create a dictionary to store ranks
+        rank_dict = {value: index for index, value in enumerate(sorted_lst)}
+        
+        # Create a new list containing ranks of elements in the original list
+        result = [rank_dict[value] for value in self.target_depths]
+    
+        return result
+    
     def precision_recall_fscore_support(self, y_true, y_pred, **kwargs):
         assert len(y_pred) == len(self.target_depths),  "y_pred does not match the number of target texts!"
         # calculate the distances between the depth of the source median and the depth of each target text
-        dists = [self.source_median - x for x in self.target_depths]
-        self.target_weights = [d/sum(dists) for d in dists]
+        #dists = [self.source_median - x for x in self.target_depths]
+        #self.target_weights = [d/sum(dists) for d in dists]
+        self.target_weights = self._ranks()
         return precision_recall_fscore_support(y_true, y_pred, sample_weight=self.target_weights, **kwargs)
