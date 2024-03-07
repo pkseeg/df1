@@ -38,10 +38,9 @@ class DF1:
     
         return result
     
-    def precision_recall_fscore_support(self, y_true, y_pred, **kwargs):
+    def precision_recall_fscore_support(self, y_true, y_pred, estimated_overlap = 0.2, **kwargs):
         assert len(y_pred) == len(self.target_depths),  "y_pred does not match the number of target texts!"
         # calculate the distances between the depth of the source median and the depth of each target text
-        estimated_overlap = 0.2
         dists = [self.source_median - x for x in self.target_depths]
         percentile = np.percentile(dists, estimated_overlap)
         zeroed_out = [x if x > percentile else 0 for x in dists] # only take those about some estimate overlap threshold
